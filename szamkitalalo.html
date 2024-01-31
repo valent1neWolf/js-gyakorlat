@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Számkitaláló játék</title>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>Pick a number between 1-10</p>
+    <label >Enter a guess: <input id="guessField"></label>
+    <button id="gomb" type="submit">Submit</button>
+    <h2 id="valasz"></h2>
+    <script>
+        let randomNum;
+        let userInput;
+        let guesses = 0;
+        const max = 10;
+        const min = 1; 
+        document.getElementById("gomb").onclick = function randomNumGenerator() {
+            randomNum = Math.floor(Math.random()*(max-min))+1;
+            console.log(randomNum, typeof randomNum);
+            
+            hasonlito(randomNum);
+        }
+
+        function hasonlito(randomNum) {
+            userInput = document.getElementById("guessField").value;
+            userInput = Number(userInput);
+            console.log(userInput, typeof userInput);
+            guesses+=1;
+            if (userInput == randomNum) {
+                document.getElementById("valasz").innerHTML = `Congrats! You have won. It took you ${guesses} guesses`;
+                document.getElementById("valasz").style.backgroundColor = "lightgreen";
+                guesses = 0;
+            } else{
+                document.getElementById("valasz").innerHTML = `You didn't get it. Try again...`;
+                document.getElementById("valasz").style.backgroundColor = "red";
+            }
+        }
+
+    </script>
+</body>
+</html>

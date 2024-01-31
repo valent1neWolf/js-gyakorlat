@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    input {
+      width: 40px;
+      text-align: center;
+    }
+
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
+  <title>Matrix Multiplication</title>
+</head>
+<body>
+  <h2>Matrix Multiplication</h2>
+
+  <form id="matrixForm">
+    <label for="rowsA">Rows of Matrix A:</label>
+    <input type="number" id="rowsA" name="rowsA" min="1" required><br>
+    <label for="colsA">Columns of Matrix A:</label>
+    <input type="number" id="colsA" name="colsA" min="1" required><br>
+
+    <label for="rowsB">Rows of Matrix B:</label>
+    <input type="number" id="rowsB" name="rowsB" min="1" required><br>
+    <label for="colsB">Columns of Matrix B:</label>
+    <input type="number" id="colsB" name="colsB" min="1" required><br>
+
+    <button type="button" onclick="createMatrices()">Create Matrices</button>
+    <button type="button" onclick="multiplyMatrices()">Multiply</button>
+  </form>
+
+  <h3>Matrix A:</h3>
+  <table id="matrixATable"></table>
+
+  <h3>Matrix B:</h3>
+  <table id="matrixBTable"></table>
+
+  <h3>Intermediate Steps:</h3>
+  <table id="stepsTable"></table>
+
+  <h3>Result:</h3>
+  <table id="resultTable"></table>
+
+  <script>
+    function createMatrices() {
+      const rowsA = parseInt(document.getElementById('rowsA').value);
+      const colsA = parseInt(document.getElementById('colsA').value);
+      const rowsB = parseInt(document.getElementById('rowsB').value);
+      const colsB = parseInt(document.getElementById('colsB').value);
+
+      createMatrixInput('matrixATable', 'matrixA', rowsA, colsA);
+      createMatrixInput('matrixBTable', 'matrixB', rowsB, colsB);
+    }
+
+    function createMatrixInput(tableId, matrixName, rows, cols) {
+      const matrixTable = document.getElementById(tableId);
+      matrixTable.innerHTML = '';
+
+      for (let i = 0; i < rows; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < cols; j++) {
+          const cell = document.createElement('td');
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.name = matrixName;
+          cell.appendChild(input);
+          row.appendChild(cell);
+        }
+        matrixTable.appendChild(row);
+      }
+    }
+
+    function multiplyMatrices() {
+      // Get matrix values from input fields
+      const matrixAValues = getMatrixValues('matrixA');
+      const matrixBValues = getMatrixValues('matrixB');
+
+      // Perform matrix multiplication
+      const { resultMatrix, intermediateSteps } = multiply(matrixAValues, matrixBValues);
+
+      // Display intermediate steps in a table
+      const stepsTable = document.getElementById('stepsTable');
+      displayIntermediateSteps(stepsTable, intermediateSteps);
+
+      // Display the final result in a table
+      const resultTable = document.getElementById('resultTable');
+      displayMatrix(resultTable, resultMatrix);
+    }
+
+    function getMatrixValues(matrixName) {
+      const matrixInputs = document.getElementsByName(matrixName);
+      const values = [];
+
+      for (let i = 0; i < matrixInputs.length; i++) {
+        const inputValue = parseFloat(matrixInputs[i].value);
+        values.push(isNaN(inputValue) ? 0 : inputValue);
+      }
+
+      return values;
+    }
+
+    function multiply(matrixA, matrixB) {
+      // Assuming matrixA has dimensions (m x n) and matrixB has dimensions (n x p)
+      const m = Math.sqrt(matrixA.length);
+      const n = Math.sqrt(matrixB.length);
+      const p = matrixB.length / n;
+
+      const resultMatrix = [];
+      const intermediateSteps = [];
+
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < p; j++) {
+          let sum = 0;
+          let step = `${i + 1}${j + 1} = `;
+
+          for (let k = 0; k < n; k++) {
+            const aVal = matrixA[i * n + k] || 0;
+            const bVal = matrixB[k * p + j] || 0;
+
+            sum += aVal * bVal;
+
+            step += `${aVal} * ${bVal}`;
+            if (k < n - 1) {
+              step += ' + ';
+            }
+          }
+
+          intermediateSteps.push(`${step} = ${sum}`);
+          resultMatrix.push(sum);
+        }
+      }
+
+      return { resultMatrix, intermediateSteps };
+    }
+
+    function displayIntermediateSteps(table, steps) {
+      table.innerHTML = '';
+
+      steps.forEach((step, index) => {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.textContent = `Step ${index + 1}: ${step}`;
+        row.appendChild(cell);
+        table.appendChild(row);
+      });
+    }
+
+    function displayMatrix(table, matrix) {
+      table.innerHTML = '';
+
+      const numRows = Math.sqrt(matrix.length);
+      const numCols = matrix.length / numRows;
+
+      for (let i = 0; i < numRows; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < numCols; j++) {
+          const cell = document.createElement('td');
+          cell.textContent = matrix[i * numCols + j];
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+    }
+  </script>
+</body>
+</html>

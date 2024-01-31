@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label id="randomSzam1"></label><br>
+    <label id="randomSzam2"></label><br>
+    <label id="randomSzam3"></label><br>
+    <button id="dobj">Dobj!</button>
+    <script>
+        let min=10;
+        let max=60;
+
+        document.getElementById("dobj").onclick = function dobas() {
+            let x = Math.floor(Math.random()*6)+1;
+            let y = Math.floor(Math.random()*20)+1;
+            let z = Math.floor(Math.random()*(max-min))+1;
+
+            
+            document.getElementById("randomSzam1").innerHTML = x;
+            document.getElementById("randomSzam2").innerHTML = y;
+            document.getElementById("randomSzam3").innerHTML = z;
+        }
+
+    </script>
+    <script src="string_methods.js"></script>
+    <script src="method_chaining.js"></script>
+</body>
+</html>

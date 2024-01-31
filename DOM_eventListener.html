@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    #innerDiv{
+    background-color: lightgreen;
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+}
+    #outerDiv{
+    background-color: lightgreen;
+    width: 200px;
+    height: 200px;
+}
+    </style>
+</head>
+<body>
+    <div id="outerDiv">
+        <div id="innerDiv"></div>
+    </div>
+<br>
+<input type="text" id="userText">
+<p id="afterText"></p>
+
+        <script>
+// .addEventListener(event, function, useCapture)
+// You can add many event handlers to one element.
+// Even the same event that invokes different functions
+
+const innerDiv = document.getElementById("innerDiv");
+const outerDiv = document.getElementById("outerDiv");
+const inputBox = document.getElementById("userText");
+console.log(inputBox);
+innerDiv.addEventListener("click", changeBlue);
+outerDiv.addEventListener("click", changeBlue, true);//amelyik van true-ar állítva azt veszi elsőnek
+inputBox.addEventListener("keyup", writeAnswer);    //vagy keydown
+
+function changeBlue(){
+    alert(`You selected ${this.id}`);
+    this.style.backgroundColor = "lightblue"
+}
+
+function writeAnswer() {
+    let userInput = inputBox.value;
+    document.getElementById("afterText").innerHTML = userInput;
+}
+</script>
+</body>
+</html>

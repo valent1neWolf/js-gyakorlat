@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Surface Area Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Surface Area Calculator</h1>
+    <form id="shapeForm">
+        <input type="radio" id="cuboid" name="shape" value="cuboid" checked>
+        <label for="cuboid">Cuboid</label><br>
+        <input type="radio" id="box" name="shape" value="box">
+        <label for="box">Box</label><br>
+        <div id="dimensions">
+            <label for="length">Length:</label><br>
+            <input type="number" id="length" name="length"><br>
+            <label for="width">Width:</label><br>
+            <input type="number" id="width" name="width"><br>
+            <label for="height">Height:</label><br>
+            <input type="number" id="height" name="height"><br>
+        </div>
+        <input type="button" value="Calculate" onclick="calculateSurfaceArea()">
+    </form>
+    <p id="result"></p>
+    <script >
+function calculateSurfaceArea() {
+    var shape = document.querySelector('input[name="shape"]:checked').value;//ez itt 200IQ
+    var length = document.getElementById('length').value;   //mivel ez mindkettőben megtalálható, ezért nem kell az if-else -be rakni
+    var surfaceArea;
+    if (shape === 'cuboid') {
+        var width = document.getElementById('width').value;
+        var height = document.getElementById('height').value;
+        surfaceArea = 2 * (length * width + width * height + length * height);
+    } else { // shape is a box
+        surfaceArea = 6 * Math.pow(length, 2);
+    }
+    document.getElementById('result').innerHTML = "The surface area of the " + shape + " is: " + surfaceArea;
+}
+
+var currentShape = 'cuboid'; // initial shape
+
+//az alapján, hogy melyik van bepipálva, változtatja a dimenziókat (vagyis, hogy egy vagy három oldalt kell megadni)
+document.getElementById('shapeForm').addEventListener('change', function() {
+    var shape = document.querySelector('input[name="shape"]:checked').value;
+    if (shape !== currentShape) {
+        var dimensionsDiv = document.getElementById('dimensions');
+        if (shape === 'cuboid') {       //ha ezt itt nem definiálnám, akkor a visszaváltásnál a téglatest radio-ra a box inputja maradna meg
+            dimensionsDiv.innerHTML = `
+                <label for="length">Length:</label><br>
+                <input type="number" id="length" name="length"><br>
+                <label for="width">Width:</label><br>
+                <input type="number" id="width" name="width"><br>
+                <label for="height">Height:</label><br>
+                <input type="number" id="height" name="height"><br>
+            `;
+        } else { // shape is a box
+            dimensionsDiv.innerHTML = `
+                <label for="length">Side:</label><br>
+                <input type="number" id="length" name="length"><br>
+            `;
+        }
+        currentShape = shape;
+    }
+});
+    </script>
+</body>
+</html>

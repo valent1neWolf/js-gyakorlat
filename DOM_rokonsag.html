@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <ul id="fruit">
+        <li>apple</li>
+        <li>orange</li>
+        <li>banana</li>
+    </ul>
+    <ul id="vegetables">
+        <li>carrots</li>
+        <li>potatoes</li>
+        <li>onions</li>
+    </ul>
+    <ul id="dessert">
+        <li>ice cream</li>
+        <li>cake</li>
+        <li>pie</li>
+    </ul>
+    <script >
+
+let element = document.querySelector("#fruit");
+let child = element.firstElementChild;
+child.style.backgroundColor = "lightgreen";
+
+
+let element1 = document.querySelector("#dessert");
+let children1 = Array.from(element1.children);
+children1.forEach(child1 =>{
+    child1.style.backgroundColor = "lightblue";
+})
+// .firstElementChild       //első gyerek
+// .lastElementChild        //utolsó gyerek (!figyelni kell,hogy a body utolsó gyereke a <script>)
+// .parentElement           //szülő
+// .nextElementSibling      //a fruit-nak a vegetables lesz
+// .previousElementSibling      //a fruit-nak nincs ilyen-je, mivel ő az első
+// .children[]              //konkrétan valahányadik elem
+// Array.from(.children)
+    </script>
+</body>
+</html>

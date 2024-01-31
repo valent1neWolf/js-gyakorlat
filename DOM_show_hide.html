@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <button id="myButton">toggle</button>
+    <image id="myImg" src="letöltés.jpg" style="visibility: hidden;">  
+        <!-- visibility helyett style="display:none;" -->
+    <p>Press the button...</p>
+    <script >
+const myButton = document.querySelector("#myButton");
+const myImg = document.querySelector("#myImg");
+
+myButton.addEventListener("click", () => {
+//foglal helyett
+    if(myImg.style.visibility == "hidden"){
+        myImg.style.visibility = "visible";
+    }
+    else{
+        myImg.style.visibility = "hidden";
+    }
+
+//nem foglal helyet
+    //másik módja:
+    // if(myImg.style.display == "none"){
+    //     myImg.style.display = "block";
+    // }
+    // else{
+    //     myImg.style.display = "none";
+    // }
+})
+    </script>
+</body>
+</html>

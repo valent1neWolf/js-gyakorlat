@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 100px;
+            width:  100px;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <button id="myButton">button</button>
+    <input type="text" id="myInput">
+    <div></div>
+
+
+    <script>
+        const event = document.querySelector("#myButton");
+        const event1 = document.querySelector("#myInput");
+        const event2 = document.querySelector("div");
+        
+        event.onclick = doSomething;    //ide nem kell a ()
+        event1.onchange = doSomethingElse;
+        event2.onmouseover = doSomethingColor;
+        event2.onmouseout = doSomethingColorBack;
+        event2.onmousedown = doSomethingColorHold;
+        event2.onmouseup = doSomethingColorLetGo;
+        function doSomething() {
+            alert("You did something!");
+        }
+        
+        function doSomethingElse() {
+            console.log(event1.value);
+        }
+        
+        function doSomethingColor() {
+            event2.style.backgroundColor = "red";
+        }
+
+        function doSomethingColorBack() {
+            event2.style.backgroundColor = "lightgreen";
+        }
+
+        function doSomethingColorHold() {
+            event2.style.backgroundColor = "lightblue";
+        }
+
+        function doSomethingColorLetGo() {
+            event2.style.backgroundColor = "purple";
+        }
+    </script>
+</body>
+</html>

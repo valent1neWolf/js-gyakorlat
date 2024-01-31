@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+</head>
+<body>
+
+    <h1 id="myTitle">This is the Menu</h1>
+
+    <input type="radio" name="fruits" value="apple">
+    <label for="apple">apple</label><br>
+    <input type="radio" name="fruits" value="orange">
+    <label for="orange">orange</label><br>
+    <input type="radio" name="fruits" value="banana">
+    <label for="banana">banana</label><br>
+
+    <ul>
+        <li>carrots</li>
+        <li>potatoes</li>
+        <li>onions</li>
+    </ul>
+
+    <div class="desserts">ice cream</div>
+    <div class="desserts">cake</div>
+    <div class="desserts">pie</div>
+
+    <script>
+// let element = document.getElementById("myTitle");
+// element.style.backgroundColor = "lightgreen";
+
+
+// let fruits = document.getElementsByName("fruits");       //ARRAY
+// fruits.forEach(fruit => {
+//     if(fruit.checked){
+//         console.log(fruit.value);
+//     }
+// })
+
+            //COLLECTION
+let vegetables = document.getElementsByTagName("li");   //mivel ezek COLLECTION-t adnak vissza,ezért ki kell választani egy adott elemet,amire alkalmazni akarjuk a stílust
+vegetables[1].style.backgroundColor = "lightgreen";
+ //ha az összes-re akakrnánk akkor, először át kéne konvertálnunk egy ARRAY-re és berakni egy forEach-be
+
+// Array.from(vegetables).forEach(vegetable => {
+//     vegetable.style.backgroundColor = "red"
+// }) 
+
+let desserts = document.getElementsByClassName("desserts");     //COLLECTION
+desserts[0].style.backgroundColor = "lightgreen";
+
+
+let element = document.querySelector("[for]");  //a querySelector-ba lehet írni:    taget, #id-t .class-t, [atribute]
+element.style.backgroundColor = "lightgreen";
+
+
+let elements = document.querySelectorAll("[for]");          //ARRAY
+elements.forEach(element => {
+    element.style.backgroundColor = "lightgreen";
+})
+
+
+
+    </script>
+</body>
+</html>

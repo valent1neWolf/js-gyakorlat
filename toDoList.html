@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    padding-left: 75px;
+    background-image: url(./yellow_page.jpg);
+}
+
+#todoInput, #addButton {
+    margin: 10px;
+    margin-top: 7px;
+    background-color: rgba(255, 255,0 , 0);
+}
+
+#todoList {
+    list-style-type: none;
+}
+
+.todoItem {
+    margin: 0px;
+    padding-bottom: 2px;
+    /* background-color: #f0f0f0; */
+}
+h1{
+    font-family: 'Courier New', Courier, monospace;
+}
+label{
+    display: inline-block;
+    width: 200px;
+}
+input[type="submit"]{
+    position: relative;
+    top: -5px;
+    border-radius: 25%;
+    border: none;
+    background-color: inherit;
+}
+input[type="submit"]:hover{
+    background-color: red;
+}
+    </style>
+</head>
+<body>
+
+
+    <h1>Todo List</h1>
+    <input id="todoInput" type="text" placeholder="New task" maxlength="24">
+    <button id="addButton">Add</button>
+    <ul id="todoList"></ul>
+    
+    
+    
+    <script >
+document.getElementById('addButton').addEventListener('click', function() {
+    var value = document.getElementById('todoInput').value;
+    if (value) {
+        addItem(value);
+        document.getElementById('todoInput').value = '';
+    }
+});
+
+function addItem(text) {
+    var list = document.getElementById('todoList');
+
+    var item = document.createElement('li');
+    item.classList.add('todoItem');
+
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            item.style.textDecoration = 'line-through';
+
+        } else {
+            item.style.textDecoration = 'none';
+        }
+    });
+
+    var label = document.createElement('label');
+    label.innerText = text;
+
+    var deleteButton = document.createElement('input');
+    deleteButton.type = 'submit';
+    deleteButton.value = 'X';
+    deleteButton.addEventListener('click', function() {
+        list.removeChild(item);
+    });
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteButton);
+    list.appendChild(item);
+}
+
+    </script>
+</body>
+</html>
+<!-- 
+setTimeout(function() {
+    list.removeChild(item);
+}, 2000); // Remove item after 2 seconds -->

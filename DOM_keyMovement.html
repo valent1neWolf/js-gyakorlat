@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #myDiv{
+            background-color: lightgreen;
+            width: 100px;
+            height: 100px;
+            border: 3px solid black;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="myDiv"></div>
+
+
+    <script>
+document.addEventListener("keydown",move);
+
+let x=0;
+let y=0;
+
+function move() {
+    switch (event.key) {
+        case "ArrowDown":
+            y+=5;
+            document.getElementById("myDiv").style.top = y + "px";
+            break;
+
+            case "ArrowUp":
+            y-=5;
+            document.getElementById("myDiv").style.top = y + "px";
+            break;
+
+            case "ArrowRight":
+            x-=5;
+            document.getElementById("myDiv").style.right = x + "px";
+            break;
+
+            case "ArrowLeft":
+            x+=5;
+            document.getElementById("myDiv").style.right = x + "px";
+            break;
+
+        default:
+            break;
+    }
+}
+    </script>
+</body>
+</html>

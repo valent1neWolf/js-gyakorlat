@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="fruit">
+        <li>apple</li>
+        <li>orange</li>
+        <li>banana</li>
+    </ul>
+
+<script>
+
+    // add/change HTML elements
+// .innerHTML (vulnerable to XSS attacks)
+// .textContent (more secure)
+
+const nameTag = document.createElement("h1");   //új tag elem létrehozása
+nameTag.textContent = "Bro";
+document.body.append(nameTag);
+
+const myList = document.querySelector("#fruit");
+const listItem = document.createElement("li");
+let hossz = myList.children.length -1;  //így lehet elérni, hogy mindig az utolsó előtti helyre kerüljön
+console.log(hossz);
+listItem.textContent = "mango";     //mivel ez nem egy ARRAY hanem csak TAGEK , ezért NINCS push vagy unshift
+// myList.append(listItem);        //utolsó helyre teszi 
+// myList.prepend(listItem);       //1. helyre teszi
+                                                           
+myList.insertBefore(listItem, myList.getElementsByTagName("li")[hossz]); //számot is lehetne ide írni   
+//1. index helyére teszi -- a 0 és az 1 ugyanannak veszi
+listItem.style.backgroundColor ="lightgreen";
+</script>
+</body>
+</html>

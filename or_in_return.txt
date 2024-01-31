@@ -1,0 +1,40 @@
+function exampleFunction(value) {
+  return value || "Default Value";
+}
+
+console.log(exampleFunction("Hello"));        // Output: "Hello"
+console.log(exampleFunction(0));               // Output: "Default Value"
+console.log(exampleFunction(null));            // Output: "Default Value"
+console.log(exampleFunction(undefined));       // Output: "Default Value"
+console.log(exampleFunction(""));              // Output: "Default Value"
+
+
+
+In JavaScript, the || operator is the logical OR operator. When used in a return statement, it allows you to return the value of the first truthy operand, or the last operand if all operands are falsy.
+In the context of your lookUpProfile function, you can use the || operator to return the value of contact[prop] if it exists, or the default value "No such property" if contact[prop] is falsy (undefined in this case):
+
+function lookUpProfile(name, prop) {
+  for (const contact of contacts) {
+    if (contact.firstName === name) {
+      return contact[prop] || "No such property";
+    }
+  }
+  return "No such contact";
+}
+
+
+
+
+
+function rangeOfNumbers(startNum, endNum) {
+  if(startNum == endNum){
+    return [endNum];
+  } else{
+    const myArray = rangeOfNumbers(startNum, endNum-1); 
+    myArray.push(endNum);
+    console.log(myArray)
+    return myArray;
+  }
+};
+
+rangeOfNumbers(6, 9);
