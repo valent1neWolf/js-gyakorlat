@@ -78,4 +78,182 @@ console.log("--------------------------------------------------")
       console.log(spinalCase('This Is Spinal Tap'));
       console.log(spinalCase("The_Andy_Griffith_Show"))
       console.log(spinalCase("thisIsSpinalTap"))
+
+    console.log("--------------------------------------------------");
     //--------------------------------------------------------------------------------
+      //pig latin
+      //ha a szó elején van magánhangzó, akkor a szó végére hozzá kell tenni a "way" szót
+      //ha a szó elején van mássalhangzó, akkor a mássalhangzókat a szó végére kell tenni és utána a "ay" szót
+      //ha a szóban nincs magánhangzó, akkor a szó végére kell tenni az "ay" szót
+      //pl. "consonant" -> "onsonantcay"
+      function translatePigLatin(str) {
+        let vowels =["a","e","i","o","u"];
+        let word = str.split("");
+        let index = isItVowel();
+        function isItVowel(){
+          for(let i = 0;i<word.length;i++){
+            if(vowels.includes(word[i])){
+              return i;
+            } else if(i==word.length-1){
+              return word.length;
+            }
+          }
+        }
+        if(index ==0){
+          str = str + "way";
+        } else if(index ==str.length){
+          str+="ay" 
+        } else{
+          str = str.slice(index) + str.slice(0,index) + "ay";
+          
+        }
+        // console.log(index)
+        // console.log(word)
+        // console.log(str)
+        return str;
+      }
+      
+      console.log(translatePigLatin("consonant"));
+      console.log(translatePigLatin("eight"));
+      console.log(translatePigLatin("schwartz"));
+      console.log(translatePigLatin("rhythm"));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+
+//search and replace
+//megkeresi a before szót a str-ben és kicseréli az after szóra
+//ha a before szó nagybetűvel kezdődik, akkor az after szó is nagybetűvel kell kezdődjön
+//ha a before szó kisbetűvel kezdődik, akkor az after szó is kisbetűvel kell kezdődjön
+//pl. myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped") -> "A quick brown fox leaped over the lazy dog"
+function myReplace(str, before, after) {
+  if(before[0] === before[0].toUpperCase()){
+    after = after[0].toUpperCase() + after.slice(1);
+  } else if(before[0] === before[0].toLowerCase()){
+    after = after[0].toLowerCase() + after.slice(1);
+  }
+  str = str.replace(before,after)
+  // console.log(str)
+  return str;
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"));
+console.log(myReplace("He is Sleeping on the couch", "Sleeping", "sitting"))
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//DNA párkeresés
+
+const dnaPairs ={
+  "A":"T",
+  "T":"A",
+  "G":"C",
+  "C":"G"
+}
+
+function pairElement(str) {
+  str = str.split("").map(parKereses);
+  function parKereses (eredeti){
+    return [eredeti,dnaPairs[eredeti]]
+  }
+  return str;
+}
+
+console.log(pairElement("GCG"));
+console.log(pairElement("ATCGA"));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//hiányzó betű az abc-ből
+//megkeresi a hiányzó betűt a stringben az abc alapján
+//pl. "abce" -> "d"
+
+function fearNotLetter(str) {
+  let letters = "abcdefghijklmnopqrstuvwxyz";
+  let szelet = letters.slice(letters.indexOf(str[0]),letters.indexOf(str[str.length-1])+1);
+  console.log(szelet);
+  for(let i=0;i<szelet.length;i++){
+    if(!str.includes(szelet[i])){
+      return szelet[i];
+    }
+  }
+  
+}
+console.log(fearNotLetter("abce"));
+console.log(fearNotLetter("abcdefghjklmno"));
+console.log(fearNotLetter("stvwx"));
+console.log(fearNotLetter("abcdefghijklmnopqrstuvwxyz"));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//az ismétlődő elemeket kiszedi a tömbből és egyesíti őket egy tömbbe
+
+function uniteUnique(...arr) {
+  let osszesitett = [].concat(...arr);
+  osszesitett =Array.from(new Set(osszesitett));
+  //muszáj az Array.from-ot használni, mert new Set-tel egy setet ad vissza (ami nem tömb), de az Array.from átalakítja tömbbé
+  // Set(5) {1, 3, 2, 5, 4}-> set
+  return osszesitett;//egyből vissza lehetne adni az arrayt,de mindegy
+}
+
+console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
+console.log(uniteUnique([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//html entitások kicserélése
+//kicseréli az egyes karaktereket a megfelelő html entitásokra
+
+const htmlKarakterek = {
+  '"':'&quot;',
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  "'":"&apos;"
+}
+
+function convertHTML(str) {
+  [...str].forEach((char) =>{ //a stringet tömbbé alakítjuk és végig iterálunk rajta
+  if(Object.keys(htmlKarakterek).includes(char)){
+     str = str.replace(char,htmlKarakterek[char]);
+  }
+  })
+ return str;
+}
+
+console.log(convertHTML("Dolce & Gabbana"));
+console.log(convertHTML('Stuff in "quotation marks"'))
+console.log(convertHTML("<>"))
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//Sum All Odd Fibonacci Numbers
+//összeadja a Fibonacci sorozatban az összes páratlan számot, amik a megadott számnál kisebbek vagy egyenlőek
+// ha negatívat adunk meg, akkor undefindet ad vissza
+function sumFibs(num) {
+  let fibonacci = 0;
+  let array =[0,1];
+  if(num>=1){
+    while(fibonacci<=num){
+      fibonacci = array[array.length-1] + array[array.length-2];
+      if(fibonacci<=num){
+        array.push(fibonacci);
+      }
+    }
+  array = array.filter((elem)=>elem%2==1);
+  array = array.reduce((a,b)=>a+b);
+  return array;
+  }else if(num==0){
+    array=0;
+    return array;
+  }
+  // console.log(fibonacci);
+
+}
+
+console.log(sumFibs(10));
+
+console.log(sumFibs(1000));
+console.log(sumFibs(4));
+console.log(sumFibs(0));
+console.log(sumFibs(75025));
