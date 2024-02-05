@@ -257,3 +257,139 @@ console.log(sumFibs(1000));
 console.log(sumFibs(4));
 console.log(sumFibs(0));
 console.log(sumFibs(75025));
+
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------
+//Sum All Primes
+function isPrime(szam) {
+  if (szam <= 1) {  //1 és 0 nem lehet prím
+    return false;
+  }
+  //ezt itt a nehezebb kitalálni
+  for (let i = 2; i <= Math.sqrt(szam); i++) {  //a prímeket csak a négyzetgyökig kell vizsgálni, mivel ha nem prímszám, akkor itt is fogunk tallni olyan értéket amivel matradéktalanul osztható
+    if (szam % i === 0) { //ha a szam 2 vagy 3, akkor a ciklus le sem fut,mivel i<=Math.sqrt(szam) feltétel nem teljesül pl. 2 gyöke 1,4142, ami kisebb mint 2 és 3 gyöke 1,732, ami kisebb mint 2 ; így kénytelenek a return true-t visszaadni
+      // console.log(szam,i)
+      return false;
+    }
+  }
+  return true;
+}
+function sumPrimes(num) {
+  let primek = [];
+  for (let i = 1; i <= num; i++) {    //végig iterálunk a számokon és ha prím, akkor hozzáadjuk a primek tömbhöz
+    // console.log(isPrime(i),i)
+    if(isPrime(i)){
+      primek.push(i)
+    }
+  }
+  console.log(primek);
+  primek = primek.reduce((a,b)=>a+b);
+  return primek;
+}
+
+console.log(sumPrimes(10));
+console.log(sumPrimes(977));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//legkisebb közös többszörös:
+
+function smallestCommons(arr) {
+const [min, max] = arr.sort((a, b) => a - b); //megigazítsuk a sorrendet (a kisebb szám lesz az első)
+const numberDivisors = max - min + 1; //hány szám van a két szám között (a tömb hossza)
+
+let upperBound = 1;
+for (let i = min; i <= max; i++) {
+  upperBound *= i;    //a legnagyobb szám lesz a tömb elemeinek szorzata **(logikus...)
+}
+
+for (let multiple = max; multiple <= upperBound; multiple += max) {
+  // mivel a lkt-nek oszthatónak kell lennie az összes számmal, ezért a tömb legnagyobb számát használjuk lépésköznek
+  //lejobb esetben is lkt = max, legrosszabb esetben lkt = upperBound
+  let divisorCount = 0; //csak számolja, hogy az adott lkt hány számnak felel meg
+  for (let i = min; i <= max; i++) {
+    if (multiple % i === 0) {
+      divisorCount += 1;  //ha az adott lkt osztható az az array egyik elemével, akkor növeljük a számlálót
+    }
+  }
+  if (divisorCount === numberDivisors) {  //ha ez a számláló eléri a tömb hosszát, akkor az adott lkt a legkisebb közös többszörös
+    return multiple;
+  }
+}
+}
+//magam nehezen jöttem volna rá erre...
+console.log(smallestCommons([1, 5]));
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//dobja ki,ami nem felel meg a feltételnek
+//ha már egyszer volt true,akkor az után már többet nem dobunk ki
+function dropElements(arr, func) {
+  let hamis = false;
+  // console.log(arr)
+  arr = arr.filter((elem)=>{
+    if(func(elem)){ //ha az elem megfelel a feltételnek, akkor a hamis értéket true-ra változtatjuk, ezzel rákényszerítve, hogy a loop maradég részében csak true-t tudjon visszaadni
+      hamis=true; 
+      return true;
+    }else{
+      return hamis; //viszont ha még eddig nem volt true egyszer sem,akkor a hamis false marad
+    }
+  })
+  // console.log(arr)
+  return arr;
+}
+// console.log( 2 > 2)
+console.log(dropElements([1, 2, 3], function(n) {return n < 3; }));
+console.log(dropElements([1, 2, 3, 4], function(n) {return n >= 3;}))
+console.log(dropElements([0, 1, 0, 1], function(n) {return n === 1;}))
+console.log(dropElements([1, 2, 3], function(n) {return n > 0;}))
+console.log(dropElements([1, 2, 3, 4], function(n) {return n > 5;}))
+console.log(dropElements([1, 2, 3, 7, 4], function(n) {return n > 3;}))
+console.log(dropElements([1, 2, 3, 9, 2], function(n) {return n > 2;}))
+
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//flattening a tömböt
+function steamrollArray(arr) {
+  let result = [];
+
+  arr.forEach((element) => {
+    if (Array.isArray(element)) {
+      // ellenőrzi, hogy array-e
+      console.log(result)
+      result = result.concat(steamrollArray(element));
+      
+    } else {
+      // ha le lett "csupaszítva" az elem, akkor csak szimplán hozzáadjuk a resulthoz 
+      result.push(element);
+    }
+  });
+
+  return result;
+}
+console.log(steamrollArray([[["a"]], [["b"]]]))
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+console.log(steamrollArray([1, {}, [3, [[4]]]]))
+
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//binárisról szövegre
+
+function binaryAgent(str) {
+  str = str.split(" ");
+  let newStr=[];
+  for(let i=0;i<str.length;i++){
+     str[i] = parseInt(str[i], 2);  //mivel ez alapból 10-es számrendszerben van, ezért át kell alakítani binárisra
+     str[i] = String.fromCharCode(str[i]) //a charCode segítségével átalakítjuk a számot karakterré
+    } //az adott számnak megfelő unicode karaktert adja vissza (pl. 65 -> A)
+    str = str.join("");
+
+  // console.log(str)
+  return str;
+}
+
+let szoveg = binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
+console.log(szoveg);
