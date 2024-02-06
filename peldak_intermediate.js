@@ -393,3 +393,116 @@ function binaryAgent(str) {
 
 let szoveg = binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
 console.log(szoveg);
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//ha az másid érték pozitív az összes object-ben, akkor true-t ad vissza, különben false-t
+
+function truthCheck(collection, pre) {
+  
+  pre = collection.every((elem)=>{
+  if(elem[pre]){
+    return true;
+  }
+  });
+  console.log(pre)
+  return pre;
+}
+// console.log("enni"==true)
+truthCheck([{name: "Quincy", role: "Founder", isBot: false}, {name: "Naomi", role: "", isBot: false}, {name: "Camperbot", role: "Bot", isBot: true}], "isBot");
+truthCheck([{name: "Quincy", role: "Founder", isBot: false}, {name: "Naomi", role: "", isBot: false}, {name: "Camperbot", role: "Bot", isBot: true}], "name")
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//két szám összeadása komplikálva
+
+function addTogether() {
+  const [first, second] = arguments;
+
+  if (typeof (first) === "number") {
+    if (typeof (second) === "number") return first + second;
+    if (arguments.length === 1) return (second) => addTogether(first, second);
+  }
+}
+
+console.log(addTogether(2,3)); // Outputs: 5
+console.log(addTogether(5)); // Outputs: function
+console.log(addTogether(5, undefined)); // Outputs: undefined
+console.log(addTogether("https://www.youtube.com/watch?v=dQw4w9WgXcQ")); // Outputs: undefined
+console.log(addTogether(5)(7)); // Outputs: 12
+console.log(addTogether(2)([3])); // Outputs: undefined
+console.log(addTogether(2, "3")); // Outputs: undefined
+
+
+console.log("--------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//név lekérése és állítása objektumból/-ban
+//a feladat egy olyan megoldást vár el tőlünk, amelyen keresztül a felhasználó csak a megírt függvényekkel tud interaktálni az objetummal
+//vagyis pl. console.log(person.firstName) ->undefined lesz mivel ez változóként van megadva, amiket viszont így nem lehet elérni (valamiféle védetséget ad az objektumnak)
+const Person = function(first, last) {
+  let firstName = first;
+  let lastName  = last;
+
+  this.getFirstName = function() {
+    return firstName;
+  };
+
+  this.getLastName = function() {
+    return lastName;
+  };
+
+  this.getFullName = function() {
+    return this.getFirstName() + " " + this.getLastName();
+  };
+
+  this.setFirstName = function(first) {
+    return firstName = first;
+  };
+
+  this.setLastName = function(last) {
+    return lastName = last;
+  };
+
+  this.setFullName = function(first, last) {
+    this.setFirstName(first);
+    this.setLastName(last);
+    return this.getFullName();
+  };
+};
+let person = new Person('Bob', 'Ross');
+console.log(person.getFullName())
+console.log(person.getFirstName())
+console.log(person.getLastName())
+console.log(person.setFirstName("Alma"))
+console.log(person.setLastName("Curry"))
+console.log(person.getFirstName())
+console.log(person.getLastName())
+console.log(person.getFullName())
+console.log(person.setFullName('Emily Martinez', 'de la Rosa'))
+console.log(person.getFullName())
+console.log(Object.keys(Person).length)
+
+console.log("-----------------------------------------------------------------");
+//--------------------------------------------------------------------------------------------------------------
+//Kepler harmadik törvénye
+
+function orbitalPeriod(arr) {
+  const GM = 398600.4418;
+  const earthRadius = 6367.4447;
+  arr = arr.map(szamolas);
+  function szamolas(keringoTargy){
+    // console.log(keringoTargy.avgAlt)
+    let a = earthRadius + keringoTargy.avgAlt
+    let orbitalPeriod = 2*Math.PI*Math.sqrt(Math.pow(a,3)/GM)
+    orbitalPeriod = Math.round(orbitalPeriod)
+    // console.log(orbitalPeriod)
+    return {
+      "name":keringoTargy.name,
+      orbitalPeriod
+    }
+  }
+  return arr;
+}
+
+console.log(orbitalPeriod([{name : "sputnik", avgAlt : 35873.5553}]));
+console.log(orbitalPeriod([{name: "iss", avgAlt: 413.6}, {name: "hubble", avgAlt: 556.7}, {name: "moon", avgAlt: 378632.553}]))
